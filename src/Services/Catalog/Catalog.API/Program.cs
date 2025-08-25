@@ -1,5 +1,7 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Exceptions.Handler;
 using Carter;
+using Catalog.API.Data;
 using FluentValidation;
 using Marten;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -21,6 +23,7 @@ namespace Catalog.API
             {
                 config.RegisterServicesFromAssemblies(assembly);
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 
             });
 
@@ -33,9 +36,9 @@ namespace Catalog.API
                 
             }).UseLightweightSessions();
 
-
-            //if (builder.Environment.IsDevelopment())
-            //    builder.Services.InitializeMartenWith<CatalogInitialData>();
+            builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+            if (builder.Environment.IsDevelopment())
+                builder.Services.InitializeMartenWith<CatalogInitialData>();
 
             //builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
@@ -46,6 +49,8 @@ namespace Catalog.API
 
             // Configure the HTTP request Pipeline.
             app.MapCarter();
+
+            app.UseExceptionHandler(options => { });
 
             //app.UseHealthChecks("/health",
             //    new HealthCheckOptions
