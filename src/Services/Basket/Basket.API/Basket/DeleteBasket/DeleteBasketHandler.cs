@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.CQRS;
+﻿using Basket.API.Data;
+using BuildingBlocks.CQRS;
 using FluentValidation;
 
 namespace Basket.API.Basket.DeleteBasket
