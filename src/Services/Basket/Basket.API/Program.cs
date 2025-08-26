@@ -5,9 +5,12 @@ namespace Basket.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add Services to the container.
+
             var app = builder.Build();
 
-            app.MapGet("/", () => "Hello World!");
+            // Configure Http request Pipeline
 
             app.Run();
         }
