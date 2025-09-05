@@ -15,7 +15,7 @@ namespace Ordering.API
                 cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
             builder.Services
-                .AddApplicationServices()
+                .AddApplicationServices(builder.Configuration)
                 .AddInfrastructureServices(builder.Configuration)
                 .AddApiServices(builder.Configuration);
 
